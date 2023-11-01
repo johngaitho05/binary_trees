@@ -17,7 +17,8 @@ int binary_tree_is_complete(const binary_tree_t *tree)
 	{
 		if (tree->right->left && !tree->left->right)
 			return (0);
-		return (binary_tree_is_complete(tree->left) && binary_tree_is_complete(tree->right));
+		return (binary_tree_is_complete(tree->left) &&
+				binary_tree_is_complete(tree->right));
 	}
 	return (binary_tree_is_complete(tree->left));
 }
