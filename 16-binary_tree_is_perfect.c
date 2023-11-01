@@ -1,7 +1,7 @@
 #include "binary_trees.h"
 
 /**
- * _binary_tree_size - computes the number of a nod3 in a tree aka size
+ * _binary_tree_size - computes the number nodes in a tree aka size
  * @tree: the tree to compute size for
  * Return: number of nodes in the tree
  */
