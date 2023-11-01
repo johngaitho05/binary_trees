@@ -16,7 +16,7 @@ bst_t *bst_insert(bst_t **tree, int value)
 		return (*tree);
 	}
 	if (value == (*tree)->n)
-		return (*tree);
+		return (NULL);
 	else if (value < (*tree)->n && !(*tree)->left)
 	{
 		node = binary_tree_node(*tree, value);
