@@ -27,11 +27,12 @@ int is_bst_helper(const binary_tree_t *node, int min, int max)
  */
 int binary_tree_is_bst(const binary_tree_t *tree)
 {
-	if (!tree)
-		return (0);
 
 	int min = INT_MIN; /* Initialize with the minimum possible value */
 	int max = INT_MAX; /* Initialize with the maximum possible value */
+
+	if (!tree)
+		return (0);
 
 	return (is_bst_helper(tree, min, max));
 }
