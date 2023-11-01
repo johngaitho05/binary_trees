@@ -1,5 +1,6 @@
 #include "binary_trees.h"
 
+
 /**
  * tree_height - Function to find the height of the binary tree
  * @tree: Pointer to the binary tree
@@ -15,9 +16,12 @@ int tree_height(const binary_tree_t *tree)
 	left_height = tree_height(tree->left);
 	right_height = tree_height(tree->right);
 
-	return ((left_height > right_height) ? (left_height + 1) :
-			(right_height + 1));
+	if (left_height > right_height)
+		return  (left_height + 1);
+	else
+		return (right_height + 1);
 }
+
 
 /**
  * print_level - Function to print nodes at a specific level
@@ -38,6 +42,7 @@ void print_level(const binary_tree_t *tree, int level, void (*func)(int))
 		print_level(tree->right, level - 1, func);
 	}
 }
+
 
 /**
  * binary_tree_levelorder - Function for level-order traversal without a queue
