@@ -12,18 +12,18 @@ int binary_tree_is_complete(const binary_tree_t *tree)
 	bool null_node_found = false;
 
 	/* Queue for level-order traversal */
-	const binary_tree_t *queue[10000];
+	const binary_tree_t *queue[10000], *current;
 	int front = -1, rear = -1;
 
 	if (!tree)
-		return (1);
+		return (0);
 
 	/* Enqueue the root node */
 	queue[++rear] = tree;
 
 	while (front != rear)
 	{
-		const binary_tree_t *current = queue[++front];
+		current = queue[++front];
 
 		if (current == NULL)
 		{
