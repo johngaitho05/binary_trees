@@ -41,6 +41,8 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 
 	if (!tree)
 		return (0);
+	if (!(tree->left || tree->right))
+		return (1); /* tree with only 1 node */
 	if (_binary_tree_size(tree->left) !=
 		_binary_tree_size(tree->right))
 		return (0);
