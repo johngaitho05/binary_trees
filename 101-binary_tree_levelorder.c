@@ -10,7 +10,7 @@ int tree_height(const binary_tree_t *tree)
 {
 	int left_height, right_height;
 
-	if (tree == NULL)
+	if (!tree)
 		return (0);
 
 	left_height = tree_height(tree->left);
@@ -31,7 +31,7 @@ int tree_height(const binary_tree_t *tree)
  */
 void print_level(const binary_tree_t *tree, int level, void (*func)(int))
 {
-	if (tree == NULL)
+	if (!tree)
 		return;
 
 	if (level == 1)
