@@ -1,31 +1,31 @@
 #include "binary_trees.h"
 
 /**
- * avl_search_tree - search for value in binary search tree
+ * _search_tree - search for value in binary search tree
  * @tree: root of tree to search
  * @value: value to search for
  * Return: pointer to node containing value, or NULL if not found
  */
-bst_t *avl_search_tree(const bst_t *tree, int value)
+bst_t *_search_tree(const bst_t *tree, int value)
 {
 	if (tree == NULL)
 		return (NULL);
 	if (value == tree->n)
 		return ((bst_t *) tree);
 	else if (value < tree->n)
-		return (avl_search_tree(tree->left, value));
+		return (_search_tree(tree->left, value));
 	else
-		return (avl_search_tree(tree->right, value));
+		return (_search_tree(tree->right, value));
 }
 
 /**
- * avl_prune - removes node of a AVL tree when it has no children
+ * _prune - removes node of a AVL tree when it has no children
  * @root: root of tree in which `ophan` resides
  * @ophan: node to remove
  * @parent: pointer to member of parent that points to `ophan`
  * Return: pointer to root in case root is replaced
  */
-bst_t *avl_prune(bst_t *root, bst_t *ophan, bst_t **parent)
+bst_t *_prune(bst_t *root, bst_t *ophan, bst_t **parent)
 {
 	if (ophan->parent == NULL)
 	{
@@ -38,14 +38,14 @@ bst_t *avl_prune(bst_t *root, bst_t *ophan, bst_t **parent)
 }
 
 /**
- * avl_prune_left - subroutine to remove node of AVL tree for an only left child
+ * _prune_left - subroutine to remove node of AVL tree for an only left child
  * @root: root of tree in which `ophan` resides
  * @ophan: node to remove
  * @parent: pointer to member of parent that points to `ophan`
  *
  * Return: a pointer to the root in case root is replaced
  */
-bst_t *avl_prune_left(bst_t *root, bst_t *ophan, bst_t **parent)
+bst_t *_prune_left(bst_t *root, bst_t *ophan, bst_t **parent)
 {
 	ophan->left->parent = ophan->parent;
 	if (ophan->parent == NULL)
@@ -68,7 +68,7 @@ bst_t *avl_prune_left(bst_t *root, bst_t *ophan, bst_t **parent)
  */
 bst_t *_avl_remove(bst_t *root, int value)
 {
-	bst_t **parent, *node, *ophan = avl_search_tree(root, value);
+	bst_t **parent, *node, *ophan = _search_tree(root, value);
 
 	if (ophan == NULL)
 		return (root);
@@ -78,8 +78,8 @@ bst_t *_avl_remove(bst_t *root, int value)
 	if (ophan->right == NULL)
 	{
 		if (ophan->left == NULL)
-			return (avl_prune(root, ophan, parent));
-		return (avl_prune_left(root, ophan, parent));
+			return (_prune(root, ophan, parent));
+		return (_prune_left(root, ophan, parent));
 	}
 	else
 	{
@@ -117,5 +117,7 @@ bst_t *_avl_remove(bst_t *root, int value)
  */
 avl_t *avl_remove(avl_t *root, int value)
 {
+	if (!root)
+		return (NULL);
 	return (balance_avl_tree(_avl_remove(root, value)));
 }
