@@ -1,11 +1,11 @@
 #include "binary_trees.h"
 
 /**
- * avl_balance_tree - balances an AVL tree
+ * balance_avl_tree - balances an AVL tree
  * @tree: pointer to root node
  * Return: root node of the balanced tree
  */
-avl_t *avl_balance_tree(avl_t *tree)
+avl_t *balance_avl_tree(avl_t *tree)
 {
 	int balance;
 
@@ -13,8 +13,8 @@ avl_t *avl_balance_tree(avl_t *tree)
 		return (NULL);
 
 	/* Recursively balance the left and right subtrees */
-	tree->left = avl_balance_tree(tree->left);
-	tree->right = avl_balance_tree(tree->right);
+	tree->left = balance_avl_tree(tree->left);
+	tree->right = balance_avl_tree(tree->right);
 
 	/* Check the balance factor of the current node */
 	balance = binary_tree_balance(tree);

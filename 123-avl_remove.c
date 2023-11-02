@@ -119,5 +119,5 @@ avl_t *avl_remove(avl_t *root, int value)
 {
 	if (!root)
 		return (NULL);
-	return (avl_balance_tree(_avl_remove(root, value)));
+	return (balance_avl_tree(_avl_remove(root, value)));
 }
