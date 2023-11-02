@@ -20,14 +20,14 @@ bst_t *bst_search(const bst_t *tree, int value)
 }
 
 /**
- * simple_remove - subroutine to remove node of BST when it has no children
+ * _prune - removes node of a BST when it has no children
  * @root: root of tree in which `ophan` resides
  * @ophan: node to remove
  * @parent: pointer to member of parent that points to `ophan`
  *
  * Return: pointer to root in case root is replaced
  */
-bst_t *simple_remove(bst_t *root, bst_t *ophan, bst_t **parent)
+bst_t *_prune(bst_t *root, bst_t *ophan, bst_t **parent)
 {
 	if (ophan->parent == NULL)
 	{
@@ -40,14 +40,14 @@ bst_t *simple_remove(bst_t *root, bst_t *ophan, bst_t **parent)
 }
 
 /**
- * left_remove - subroutine to remove node of BST for an only left child
+ * _prune_left - subroutine to remove node of BST for an only left child
  * @root: root of tree in which `ophan` resides
  * @ophan: node to remove
  * @parent: pointer to member of parent that points to `ophan`
  *
- * Return: pointer to root in case root is replaced
+ * Return: a pointer to the root in case root is replaced
  */
-bst_t *left_remove(bst_t *root, bst_t *ophan, bst_t **parent)
+bst_t *_prune_left(bst_t *root, bst_t *ophan, bst_t **parent)
 {
 	ophan->left->parent = ophan->parent;
 	if (ophan->parent == NULL)
@@ -80,8 +80,8 @@ bst_t *bst_remove(bst_t *root, int value)
 	if (ophan->right == NULL)
 	{
 		if (ophan->left == NULL)
-			return (simple_remove(root, ophan, parent));
-		return (left_remove(root, ophan, parent));
+			return (_prune(root, ophan, parent));
+		return (_prune_left(root, ophan, parent));
 	}
 	else
 	{
