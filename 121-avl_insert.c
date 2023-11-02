@@ -87,9 +87,6 @@ avl_t *avl_insert(avl_t **tree, int value)
 {
 	avl_t *node;
 
-	if (!tree)
-		return (NULL);
-
 	node = _avl_insert(tree, value);
 	balance_avl_tree(*tree);
 
