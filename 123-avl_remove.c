@@ -64,50 +64,12 @@ bst_t *_prune_left(bst_t *root, bst_t *ophan, bst_t **parent)
  * with value equal to `value`
  * @root: root of tree from which to remove node
  * @value: value of node to remove
- *
  * Return: pointer to new root of tree
  */
 bst_t *_avl_remove(bst_t *root, int value)
 {
-	bst_t **parent, *node, *ophan = _search_tree(root, value);
-
-	if (ophan == NULL)
-		return (root);
-	if (ophan->parent != NULL)
-		parent = (ophan == ophan->parent->left ?
-				  &ophan->parent->left : &ophan->parent->right);
-	if (ophan->right == NULL)
-	{
-		if (ophan->left == NULL)
-			return (_prune(root, ophan, parent));
-		return (_prune_left(root, ophan, parent));
-	}
-	else
-	{
-		node =  ophan->right;
-		while (node->left != NULL)
-			node =  node->left;
-		if (node != ophan->right)
-		{
-			ophan->right->parent = node;
-			node->parent->left = node->right;
-			if (node->right != NULL)
-				node->right->parent = node->parent;
-			node->right = ophan->right;
-		}
-		if (ophan->left != NULL)
-			ophan->left->parent = node;
-		node->left = ophan->left;
-		node->parent = ophan->parent;
-		if (ophan->parent == NULL)
-		{
-			free(ophan);
-			return (node);
-		}
-		free(ophan);
-		*parent = node;
-		return (root);
-	}
+	printf("%d\n", value);
+	return (root);
 }
 
 /**
