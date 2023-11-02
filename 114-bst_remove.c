@@ -1,59 +1,107 @@
 #include "binary_trees.h"
 
 /**
- * find_min - finds the node with the smallest value (leftmost)
- * @node: pointer to the root node
- * Return: the node with the least value
+ * swap - swaps two nodes in binary tree
+ * @node: first node
+ * @new: second node
+ * Return: pointer to root
  */
-bst_t *find_min(bst_t *node)
+bst_t *swap(bst_t *node, bst_t *new)
 {
-	while (node->left != NULL)
+	bst_t *tmp = NULL;
+	_Bool left_child = false;
+
+	if (node->parent)
+		left_child = node->parent->left == node;
+	if (new->parent && new->parent != node)
+		new->parent->left = NULL;
+	new->parent = node->parent;
+	if (node->parent)
 	{
-		node = node->left;
+		if (left_child)
+			node->parent->left = new;
+		else
+			node->parent->right = new;
 	}
-	return (node);
+	if (node->left != new)
+	{
+		new->left = node->left;
+		node->left->parent = new;
+	}
+	if (node->right && node->right != new)
+	{
+		new->right = node->right;
+		node->right->parent = new;
+	}
+	tmp = new;
+	while (tmp->parent)
+		tmp = tmp->parent;
+	free(node);
+	return (tmp);
 }
 
 /**
- * bst_remove - removes a node from BST
- * @root: pointer to the root node
- * @value: value of the node to remove
- * Return: a pointer to the new root node
+ * bst_remove - removes a node from a Binary Search Tree
+ * @root: pointer to root of tree
+ * @value: input value
+ * Return: pointer to the new root node of the tree after removing the
+ * desired value
  */
 bst_t *bst_remove(bst_t *root, int value)
 {
-	bst_t *temp;
+	bst_t *node, *tmp;
+	_Bool left_child = false;
 
 	if (!root)
 		return (NULL);
-
-	if (value < root->n)
-		root->left = bst_remove(root->left, value);
-	else if (value > root->n)
-		root->right = bst_remove(root->right, value);
-	else
+	node = bst_search(root, value);
+	if (!node)
+		return (NULL);
+	if (node->parent)
+		left_child = node->parent->left == node;
+	if (!node->right && !node->left)
 	{
-		/* Node with the desired value found */
+		if (!node->parent)
+		{
+			free(node);
+			return (NULL);
+		}
+		if (left_child)
+			node->parent->left = NULL;
+		else
+			node->parent->right = NULL;
+		tmp = node->parent;
+		while (tmp->parent)
+			tmp = tmp->parent;
+		free(node);
+		return (tmp);
 
-		/* Case 1: Node with only one child or no child */
-		if (root->left == NULL)
-		{
-			temp = root->right;
-			free(root);
-			return (temp);
-		}
-		else if (root->right == NULL)
-		{
-			temp = root->left;
-			free(root);
-			return (temp);
-		}
-		/* Case 2: Node with two children */
-		temp = find_min(root->right);  /* Find the in-order successor */
-		/* Copy the in-order successor's value to this node */
-		root->n = temp->n;
-		/* Remove the in-order successor */
-		root->right = bst_remove(root->right, temp->n);
 	}
-	return (root);
+	if (!node->right)
+		return (swap(node, node->left));
+	tmp = node->right;
+	while (tmp->left)
+		tmp = tmp->left;
+	return (swap(node, tmp));
+}
+
+
+/**
+ * bst_search - searches for a value in a Binary Search Tree
+ * @tree: pointer to root of tree
+ * @value: input value
+ * Return: pointer to the node containing a value equals to value
+ */
+bst_t *bst_search(const bst_t *tree, int value)
+{
+	if (!tree)
+		return (NULL);
+	while (tree)
+	{
+		if (value == tree->n)
+			return ((bst_t *)tree);
+		tree = value < tree->n ? tree->left
+							   : tree->right;
+	}
+	return ((bst_t *)tree);
 }
