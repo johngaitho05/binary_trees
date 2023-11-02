@@ -4,7 +4,6 @@
  * _search_tree - search for value in binary search tree
  * @tree: root of tree to search
  * @value: value to search for
- *
  * Return: pointer to node containing value, or NULL if not found
  */
 bst_t *_search_tree(const bst_t *tree, int value)
@@ -24,7 +23,6 @@ bst_t *_search_tree(const bst_t *tree, int value)
  * @root: root of tree in which `ophan` resides
  * @ophan: node to remove
  * @parent: pointer to member of parent that points to `ophan`
- *
  * Return: pointer to root in case root is replaced
  */
 bst_t *_prune(bst_t *root, bst_t *ophan, bst_t **parent)
