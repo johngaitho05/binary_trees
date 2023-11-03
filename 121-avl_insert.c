@@ -1,6 +1,48 @@
 #include "binary_trees.h"
 
 /**
+ * balance_avl_tree - balances an AVL tree
+ * @tree: pointer to root node
+ * Return: root node of the balanced tree
+ */
+avl_t *balance_avl_tree(avl_t *tree)
+{
+	int balance;
+
+	if (!tree)
+		return (NULL);
+
+	/* Recursively balance the left and right subtrees */
+	tree->left = balance_avl_tree(tree->left);
+	tree->right = balance_avl_tree(tree->right);
+
+	/* Check the balance factor of the current node */
+	balance = binary_tree_balance(tree);
+
+	/* Perform rotations if needed */
+	if (balance > 1 && binary_tree_balance(tree->left) >= 0)
+	{
+		return (binary_tree_rotate_right(tree));
+	}
+	if (balance < -1 && binary_tree_balance(tree->right) <= 0)
+	{
+		return (binary_tree_rotate_left(tree));
+	}
+	if (balance > 1 && binary_tree_balance(tree->left) < 0)
+	{
+		tree->left = binary_tree_rotate_left(tree->left);
+		return (binary_tree_rotate_right(tree));
+	}
+	if (balance < -1 && binary_tree_balance(tree->right) > 0)
+	{
+		tree->right = binary_tree_rotate_right(tree->right);
+		return (binary_tree_rotate_left(tree));
+	}
+
+	return (tree);
+}
+
+/**
  * _avl_insert- inserts a value in AVL tree
  * @tree: pointer to the AVL tree
  * @value: the value to insert
